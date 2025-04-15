@@ -242,6 +242,7 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
               <p className="text-amber-900 mb-6 font-[Luminari,fantasy]">{scrollMessage.message}</p>
 
               {scrollMessage.title.includes("Successful") && (
+                <div>
                 <div className="mb-6 text-center">
                   <h4 className="text-amber-800 mb-2 font-[Luminari,fantasy]">Stars Earned:</h4>
                   <div className="flex justify-center">
@@ -255,7 +256,7 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
                     ))}
                   </div>
                 </div>
-              )}
+              
 
               <div className="flex gap-3">
                 <button
@@ -265,7 +266,11 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
                 >
                   Continue Spellcasting
                 </button>
-              </div>
+
+              </div></div>
+
+              )
+}
             </div>
           </div>
         </div>
