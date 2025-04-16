@@ -117,122 +117,6 @@
             <p>In this challenge, the sticky spell has been cast but lacks the threshold property, so it doesn't know when to activate!</p>
           </div>`,
         },
-        {
-          id: "3",
-          title: "Advanced Sticky Scroll",
-          description: "Create a sticky sidebar that starts scrolling only after a certain point.",
-          challenge:
-            "The Grand Wizard needs a sidebar that begins to follow the scroll, but only after passing the header. Cast an advanced sticky spell that activates at the perfect moment!",
-          hint1:
-            "The sticky spell can be fine-tuned with a specific threshold value. It doesn't always have to be 'top: 0'...",
-          hint2:
-            "Try setting 'top: 80px' to make the sidebar start sticking only after it reaches 80px from the top of the viewport.",
-          successMessage:
-            "Masterful control of the sticky enchantment! The sidebar now follows precisely as the Grand Wizard requested.",
-          failMessage:
-            "The sidebar's movement isn't quite right. Adjust your sticky threshold to make it follow only after passing the header.",
-          fixedHTML: `<div class="advanced-scroll">
-    <header class="header">Wizard's Grimoire</header>
-    <div class="content-wrapper">
-      <aside class="sidebar">
-        <div>Magical Index</div>
-        <ul>
-          <li>Potions</li>
-          <li>Incantations</li>
-          <li>Runes</li>
-          <li>Artifacts</li>
-        </ul>
-      </aside>
-      <main class="main-content">
-        <p>Scroll down to test the sidebar behavior...</p>
-        <div class="long-content"></div>
-      </main>
-    </div>
-  </div>`,
-          fixedCSS: `.advanced-scroll {
-    height: 300px;
-    overflow-y: auto;
-    border: 1px solid #7e22ce;
-    background-color: #0f0f1a;
-  }
-  
-  .header {
-    background-color: #4c1d95;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-weight: bold;
-    height: 60px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  
-  .content-wrapper {
-    display: flex;
-  }
-  
-  .sidebar {
-    width: 120px;
-    background-color: #2e1065;
-    color: white;
-    padding: 10px;
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 10px;
-  }
-  
-  .sidebar li {
-    padding: 5px 0;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    color: white;
-  }
-  
-  .long-content {
-    height: 800px;
-    background: linear-gradient(to bottom, #1e1b4b, #0f0f1a);
-  }`,
-          initialUserCSS: `/* 🧙‍♀️ Make the sidebar sticky, but only after passing the header */
-  .sidebar {
-    /* Your advanced sticky spell here */
-  }`,
-          checkFunction: (userCSS:string) => {
-            const topMatch = userCSS.match(/top:\s*(\d+)px/) || userCSS.match(/top:\s*(\d+\.?\d*)rem/)
-            if (!topMatch) return false
-  
-            const topValue = Number.parseFloat(topMatch[1])
-            const isRem = topMatch[0].includes("rem")
-  
-            // Convert rem to px if necessary (assuming 1rem = 16px)
-            const topValueInPx = isRem ? topValue * 16 : topValue
-  
-            return userCSS.includes("position: sticky") && topValueInPx >= 60
-          },
-          lesson: `<div class="lesson-content">
-            <h3>Advanced Sticky Positioning</h3>
-            <p>The sticky enchantment becomes truly powerful when you control exactly when elements become fixed.</p>
-            <p>By adjusting the threshold value (like <code>top: 80px</code>), you can create sophisticated scrolling behaviors:</p>
-            <div class="spell-example">
-              <pre><code>.sidebar {
-    position: sticky;
-    top: 80px; /* Starts sticking when 80px from viewport top */
-  }</code></pre>
-            </div>
-            <p>This is particularly useful for:</p>
-            <ul>
-              <p><li>Creating sidebars that only stick after scrolling past headers</li></p>
-              <p><li>Implementing multiple sticky elements that follow each other</li></p>
-              <p><li>Building complex navigation systems with different activation points</li></p>
-            </ul>
-          </div>`,
-        },
       ],
     },
     {
@@ -349,7 +233,7 @@
   }`,
           checkFunction: (userCSS:string) =>
             userCSS.includes("box-shadow") &&
-            (userCSS.includes("rgb") || userCSS.includes("#") || userCSS.includes("hsl")),
+            (userCSS.includes("rgb") || userCSS.includes("#") || userCSS.includes("hsl")|| userCSS.includes("px")),
           lesson: `<div class="lesson-content">
             <h3>The Magical Glow Enchantment</h3>
             <p>While shadows create depth by darkening, glows create magical effects by emitting light!</p>
