@@ -51,6 +51,8 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
   const [attempts, setAttempts] = useState<{ [key: string]: number }>({})
   const [showScroll, setShowScroll] = useState(false)
 
+  
+
   const getNextHint = () => {
     if (hintLevel < 2) {
       const currentStars = starRatings[lesson.id] || 3
@@ -60,7 +62,7 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
           [lesson.id]: currentStars - 1,
         })
       }
-      setHintLevel((prev) => Math.min(prev + 1, 2))
+      setHintLevel((prev:number) => Math.min(prev + 1, 2))
     }
   }
 
@@ -165,14 +167,35 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
     )
   }
 
-  const nextLevel=()=>{
-    if (level.subId+1<gameLevels[level.levelId].subLevels.length ){
-      const nextSubId = level.subId + 1
-      window.location.href = `/levels/${level.levelId}/${nextSubId}`
-    }else{
-      window.location.href = `/levels/${level.levelId+1}/1`
+
+  function nextLevel( stars: number) {
+    if (typeof window === "undefined") return; // Make sure it's running in the browser
+  
+    const levelId = level.levelId;
+    const subId = level.subId;
+    const key = `${levelId}-${subId}`;
+      
+  
+    let progress = JSON.parse(localStorage.getItem("gameProgress") || "{}");
+  
+    const existing = progress[key];
+    if (!existing || stars > existing.stars) {
+      progress[key] = { cleared: true, stars };
+    }
+  
+    localStorage.setItem("gameProgress", JSON.stringify(progress));
+    console.log("Saved progress:", progress);
+  
+    
+    if (subId < gameLevels[levelId].subLevels.length) {
+      const nextSubId = subId + 1;
+      window.location.href = `/levels/${levelId}/${nextSubId}`;
+    } else {
+      window.location.href = `/levels/${levelId + 1}/1`;
     }
   }
+
+
 
 
   useEffect(() => {
@@ -185,7 +208,6 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
   }, [lesson.id])
 
   const fixedHTML = lesson.fixedHTML
-  console.log(fixedHTML)
   const previewDoc = ` <html>
       <head>
           <base href="${origin}/">
@@ -199,7 +221,6 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
        
       </body>
     </html>`
-  console.log(previewDoc)
 
   return (
     <div className="relative grid grid-cols-2 gap-6 p-6 min-h-screen bg-black text-white">
@@ -226,7 +247,6 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
         </div>
       )}
 
-      {/* Scroll Popup */}
       {showScroll && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/70">
           <div className="ancient-scroll">
@@ -260,8 +280,8 @@ export default function Mirror({ lesson,level }: { lesson: lesson ,level:level})
 
               <div className="flex gap-3">
                 <button
-                  onClick={() => nextLevel()
-                  }
+                  onClick={() => nextLevel( starRatings[lesson.id] || 0)}
+                  
                   className="px-4 py-2 bg-amber-800 text-amber-50 rounded-md hover:bg-amber-700 transition-colors font-[Luminari,fantasy] transform hover:scale-105 active:scale-95"
                 >
                   Continue Spellcasting
