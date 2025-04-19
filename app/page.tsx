@@ -323,7 +323,7 @@ export default function SpellbookLanding() {
       {/* Footer */}
       <footer className="py-8 border-t border-[#E5E5E5]/10">
         <div className="max-w-6xl mx-auto px-4 text-center text-[#E5E5E5]/60 text-sm">
-          <p>© {new Date().getFullYear()} Spellbook • Master CSS with magical metaphors</p>
+          <p>© {new Date().getFullYear()} Sakshi Bansal • Master CSS with magical metaphors</p>
         </div>
       </footer>
     </div>
